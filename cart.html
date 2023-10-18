@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="product.css">
+    <title>Cart</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <img src="large_cartfairy.PNG" alt="brand_name" id="image">
+            </div>
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="cart.html"><span class="glyphicon glyphicon-shopping-cart"></span> Cart </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav><br><br>
+    <div class="container" style="width:500px">
+        <div class="row">
+            <div class="col-xs-3">Item number</div>
+            <div class="col-xs-3">Item Name</div>
+            <div class="col-xs-3">Price</div>
+            <div class="col-xs-3"></div>
+        </div>
+       
+        <div id="cart-items">
+           
+        </div>
+        <div class="row" style="background-color: lightblue">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-3">Total</div>
+            <div id="total-price" class="col-xs-3">Rs 0/-</div>
+            <div class="col-xs-3">
+                <a href="success.html" class="btn btn-primary" onclick="confirmOrder()">Confirm Order</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Copyright &#169 cartfairy. All Rights Reserved | Contact Us: +91 90000 00000</p>
+        </div>
+    </footer>
+
+    <script>
+       
+        function displayCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            let cartItems = document.getElementById('cart-items');
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                cartItems.innerHTML += `
+                    <div class="row" style="background-color: whitesmoke; padding: 5px">
+                        <div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">${item.quantity}</div>
+                        <div class="col-xs-3">${item.productName}</div>
+                        <div class="col-xs-3">Rs ${item.price}/-</div>
+                        <div class="col-xs-3"></div>
+                    </div>`;
+            });
+
+           
+            document.getElementById('total-price').textContent = `Rs ${total}/-`;
+           
+            
+        }
+
+        
+        displayCart();
+
+        function confirmOrder() {
+        localStorage.removeItem('cart');
+        window.location.href = "success.html";
+       }
+    </script>
+</body>
+</html>
